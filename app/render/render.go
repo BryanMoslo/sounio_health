@@ -2,8 +2,13 @@ package render
 
 import (
 	base "cotizador_sounio_health"
+	"fmt"
+	"net/http"
+	"regexp"
 
 	"github.com/gobuffalo/buffalo/render"
+	"github.com/gobuffalo/plush/v4"
+	"github.com/leekchan/accounting"
 )
 
 // Engine for rendering across the app, it provides
@@ -16,11 +21,39 @@ var Engine = render.New(render.Options{
 	Helpers:      Helpers,
 })
 
-// Helpers available for the plush templates, there are 
-// some helpers that are injected by Buffalo but this is 
+// Helpers available for the plush templates, there are
+// some helpers that are injected by Buffalo but this is
 // the list of custom Helpers.
 var Helpers = map[string]interface{}{
 	// partialFeeder is the helper used by the render engine
 	// to find the partials that will be used, this is important
-	"partialFeeder": base.Templates.FindString,
+	"partialFeeder":   base.Templates.FindString,
+	"toCurrency":      toCurrency,
+	"floatToString":   floatToString,
+	"activePathClass": activePathClass,
+}
+
+func toCurrency(value float64) string {
+	ac := accounting.Accounting{Symbol: "$", Precision: 0}
+	return ac.FormatMoney(value)
+}
+
+func floatToString(value float64) string {
+	return fmt.Sprintf("%.0f", value)
+}
+
+func activePathClass(class, basePath string, help plush.HelperContext) string {
+	request := help.Value("request").(*http.Request)
+	requestURL := request.URL
+
+	exp, err := regexp.Compile(fmt.Sprintf(`^%v$`, basePath))
+	if err != nil {
+		return ""
+	}
+
+	if exp.Match([]byte(requestURL.String())) {
+		return class
+	}
+
+	return ""
 }

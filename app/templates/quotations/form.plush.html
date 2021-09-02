@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-lg-4">
+        <%= f.SelectTag("ClientID", {class: "form-select", label: "Cliente", placeholder: "Seleccione un cliente", options: clients}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.InputTag("EquipmentName", {label: "Nombre del equipo", placeholder: "Nombre del equipo"}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.InputTag("EquipmentDescription", {label: "Descripción del equipo", placeholder: "Descripción del equipo"}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.InputTag("EquipmentValue", {value: floatToString(quotation.EquipmentValue.Float64), label: "Valor del equipo", class: "money-input", placeholder: "Ej: 70.000.000"}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.SelectTag("ContractType", {class: "form-select contract-type-select", label: "Tipo de contrato", options: ["Arriendo", "Leasing"]}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.SelectTag("Term", {class: "form-select", label: "Plazo (Meses)", options: ["36", "48", "60"]}) %>
+    </div>
+</div>

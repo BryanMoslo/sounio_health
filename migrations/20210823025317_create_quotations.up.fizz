@@ -1,0 +1,10 @@
+create_table("quotations") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("equipment_value", "decimal", {})
+	t.Column("equipment_name", "string", {})
+	t.Column("equipment_description", "string", {})
+	t.Column("contract_type", "string", {})
+	t.Column("term", "int", {})
+	t.Column("rate_id", "uuid", {})
+	t.Column("fee", "decimal", {})
+}

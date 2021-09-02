@@ -1,19 +1,68 @@
 <!DOCTYPE html>
 <html class="h-full">
 <head>
-  <title>app</title>
-  
-  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-param" content="authenticity_token" />
-  <meta name="csrf-token" content="<%= authenticity_token %>" />
+	<title>app</title>
 
-  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
-  <%= stylesheetTag("application.css") %>
-  <%= javascriptTag("application.js", {defer: true}) %>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="csrf-param" content="authenticity_token" />
+	<meta name="csrf-token" content="<%= authenticity_token %>" />
+
+	<link rel="icon" href="/assets/images/favicon.png" type="image/png">
+	<%= stylesheetTag("application.css") %>
+	<%= javascriptTag("application.js", {defer: true}) %>
 </head>
-<body class="h-full">
-	<main class="container mt-3">
-		<%= yield %>
+<body class="h-full" class="show" data-leftbar-theme="dark">
+	<main class="wrapper">
+		<div class="leftside-menu menuitem-active">
+			<!-- LOGO -->
+			<a href="/" class="logo py-3 pl-4 mb-2 d-block">
+				<h4 class="text-white">SOUNIO HEALTH</h4>
+			</a>
+
+			<div class="h-100 show px-2" id="leftside-menu-container" data-simplebar="init">
+				<a href="<%= quotationsPath() %>" class="cursor-pointer w-100 d-flex align-items-center side-nav-title <%= activePathClass("active", "/quotations/.*") %>">
+					<i class="bi bi-file-earmark-spreadsheet font-20 mr-2"></i> 
+					Cotizaciones
+				</a>
+				<a href="<%= interestRatesPath() %>" class="cursor-pointer w-100 d-flex align-items-center side-nav-title <%= activePathClass("active", "/interest_rates/.*") %>">
+					<i class="bi bi-percent font-20 mr-2"></i> Tasas de Interes
+				</a>
+				<a href="<%= clientsPath() %>" class="cursor-pointer w-100 d-flex align-items-center side-nav-title <%= activePathClass("active", "/clients/.*") %>">
+					<i class="bi bi-people font-20 mr-2"></i> 
+					Clientes
+				</a>
+			</div>
+		</div>
+
+		<div class="content-page">
+			<div class="content">
+				<!-- Topbar Start -->
+				<div class="navbar-custom">
+				</div>
+				<!-- end Topbar -->
+				
+				<!-- Start Content-->
+				<div class="container-fluid">
+					<%= partial("/partials/flash.plush.html") %>
+					
+					<%= yield %>
+				</div>
+
+			</div>
+		<!-- content -->
+
+			<!-- Footer Start -->
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-6">
+							<script>document.write(new Date().getFullYear())</script>© Sounio Health
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- end Footer -->
+		</div>
 	</main>
 </body>
 </html>

@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+            <a href="<%= newQuotationsPath() %>" class="btn btn-primary ms-1">Nueva Cotización</a>
+            </div>
+            <h4 class="page-title font-22 fw-normal">Mis Cotizaciones</h4>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover table-centered mb-0">
+    <thead>
+        <tr>
+            <th>Tipo de Contrato</th>
+            <th>Plazo</th>
+            <th>Valor del Equipo</th>
+            <th>Valor de Cuota</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <%= for (quotation) in quotations { %>
+            <tr>
+                <td><%= quotation.ContractType %></td>
+                <td><%= quotation.Term %> Meses</td>
+                <td><%= toCurrency(quotation.EquipmentValue.Float64) %></td>
+                <td><%= toCurrency(quotation.Fee) %></td>
+                <td>
+                    <a href="<%= quotationShowPath({quotation_id: quotation.ID}) %>" class="btn btn-success btn-sm">Ver</a>
+                    <a href="<%= editQuotationPath({quotation_id: quotation.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
+                    <a href="<%= quotationDeletePath({quotation_id: quotation.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta cotización?" class="btn btn-danger btn-sm">Borrar</a>
+                </td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+                                                

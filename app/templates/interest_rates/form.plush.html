@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-lg-4">
+        <%= f.SelectTag("ContractType", {class: "form-select contract-type-select", label: "Tipo de contrato", options: ["Arriendo", "Leasing"]}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.SelectTag("Term", {class: "form-select", label: "Plazo (Meses)", options: ["36", "48", "60"]}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.InputTag("Rate", {label: "Tasa de interés (%)", class: "percentage-input", placeholder: "Ej: 4.15"}) %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <%= f.InputTag("MinValue", {value: floatToString(interestRate.MinValue.Float64), label: "Valor mínimo del equipo", class: "money-input", placeholder: "Ej: 70.000.000"}) %>
+    </div>
+    <div class="col-lg-4">
+        <%= f.InputTag("MaxValue", {value: floatToString(interestRate.MaxValue.Float64), label: "Valor máximo del equipo", class: "money-input", placeholder: "Ej: 192.500.000"}) %>
+    </div>
+    <div class="col-lg-4">
+        <div class="purchase-option-percentage <%=if(interestRate.ContractType=="Arriendo"){%>d-none<%}%>">
+            <%= f.InputTag("PurchaseOptionPercentage", {label: "Porcentaje opción de compra (%)", class: "percentage-input", placeholder: "Ej: 4.15"}) %>
+        </div>
+    </div>
+</div>
+
+<%= f.CheckboxTag("PolicyRatePresent", {label: "Tengo la tasa de póliza", class: "mb-0"}) %>
+
+<div class="row policy-rate <%=if(!interestRate.PolicyRatePresent){%>d-none<%}%>">
+    <div class="col-lg-4">
+        <%= f.InputTag("PolicyRate", {label: "Tasa de póliza (%)", class: "percentage-input", placeholder: "Ej: 4.15"}) %>
+    </div>
+</div>

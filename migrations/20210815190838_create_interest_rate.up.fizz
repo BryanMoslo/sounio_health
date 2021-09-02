@@ -1,0 +1,11 @@
+create_table("interest_rates") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("contract_type", "string", {})
+	t.Column("rate", "decimal", {})
+	t.Column("term", "int", {})
+	t.Column("policy_rate_present", "bool", {})
+	t.Column("policy_rate", "decimal", {null: true})
+	t.Column("min_value", "decimal", {null: true})
+	t.Column("max_value", "decimal", {})
+	t.Column("purchase_option_percentage", "decimal", {null: true})
+}

@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <a href="<%= clientsPath() %>" class="btn btn-secondary ms-1">Cancelar</a>
+                <input type="submit" form="save-form" class="btn btn-primary ms-1" value="Agregar Cliente">
+            </div>
+            <h4 class="page-title font-22 fw-normal">Nuevo Cliente</h4>
+        </div>
+    </div>
+</div>
+
+<%= form_for(client, {id: "save-form", action: clientsCreatePath(), method: "POST"}) { %>
+    <%= partial("/clients/form.plush.html") %>
+<% } %>

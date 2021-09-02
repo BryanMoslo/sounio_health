@@ -1,0 +1,1 @@
+add_column("quotations", "client_id", "uuid", {null: true})

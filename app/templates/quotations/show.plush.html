@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+            <a href="<%= newQuotationsPath() %>" class="btn btn-primary ms-1">Exportar PDF</a>
+            </div>
+            <h4 class="page-title font-22 fw-normal">Información de Cotización</h4>
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <h4 class="mb-2">Cliente</h4>
+    <p class="mb-1"><b>Nombre: </b><%= quotation.Client.FirstName %> <%= quotation.Client.LastName %></p>
+    <p class="mb-1"><b>Email: </b><%= quotation.Client.Email %></p>
+    <p class="mb-1"><b>Teléfono: </b><%= quotation.Client.PhoneNumber %></p>
+    <p class="mb-1"><b>Direccion: </b><%= quotation.Client.Address %></p>
+</div>
+
+<div class="mb-3">
+    <h4 class="mb-2">Equipo</h4>
+    <p class="mb-1"><b>Equipo: </b><%= quotation.EquipmentName %></p>
+    <p class="mb-1"><b>Especificaciones: </b><%= quotation.EquipmentDescription %></p>
+</div>
+
+<div>
+    <h4 class="mb-2">Cotización de <%= quotation.ContractType %></h4>
+    <p class="mb-1"><b>Valor del Equipo: </b><%= toCurrency(quotation.EquipmentValue.Float64) %></p>
+    <p class="mb-1"><b>Plazo: </b><%= quotation.Term %> Meses</p>
+    <p class="mb-1"><b>Valor a pagar Mensual: </b><%= toCurrency(quotation.Fee) %>
+        <%= if(quotation.Rate.PolicyRatePresent) { %>
+            <b>(póliza de seguro incluída)</b>
+        <% } else { %>
+            <b>+ valor de póliza</b>
+        <% } %>
+
+    </p>
+</div>
