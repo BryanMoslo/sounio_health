@@ -20,7 +20,6 @@ func RateList(c buffalo.Context) error {
 	c.Set("interestRates", rates)
 
 	return c.Render(http.StatusOK, r.HTML("interest_rates/index.plush.html"))
-
 }
 
 func NewInterestRate(c buffalo.Context) error {

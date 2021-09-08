@@ -2,52 +2,62 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="page-title-right">
-            <a href="<%= newInterestRatesPath() %>" class="btn btn-primary ms-1">Agregar tasa interés</a>
+            <a href="<%= newInterestRatesPath() %>" class="btn btn-primary ms-1">Nueva tasa de interés</a>
             </div>
             <h4 class="page-title font-22 fw-normal">Tasas de Interés</h4>
         </div>
     </div>
 </div>
 
-<table class="table table-hover table-centered mb-0">
-    <thead>
-        <tr>
-            <th>Tipo de Contrato</th>
-            <th>Plazo</th>
-            <th>Tasa</th>
-            <th>Rango de Precios</th>
-            <th>Taza Póliza</th>
-            <th>Opcion de Compra</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <%= for (rate) in interestRates { %>
+<%= if (len(interestRates) > 0) { %>
+    <table class="table table-hover table-centered mb-0">
+        <thead>
             <tr>
-                <td><%= rate.ContractType %></td>
-                <td><%= rate.Term %> Meses</td>
-                <td><%= rate.Rate.Float64 %>%</td>
-                <td><%= toCurrency(rate.MinValue.Float64) %> - <%= toCurrency(rate.MaxValue.Float64) %></td>
-                <td>
-                    <%= if(rate.PolicyRatePresent) { %>
-                        <%= rate.PolicyRate.Float64 %>%
-                    <% } else { %>
-                        -
-                    <% } %>
-                </td>
-                <td>
-                    <%= if(rate.ContractType == "Leasing") { %>
-                        <%= rate.PurchaseOptionPercentage.Float64 %>%
-                    <% } else { %>
-                        -
-                    <% } %>
-                </td>
-                <td>
-                    <a href="<%= editInterestRatePath({interest_rate_id: rate.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
-                    <a href="<%= interestRateDeletePath({interest_rate_id: rate.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta tasa de interés?" class="btn btn-danger btn-sm">Borrar</a>
-                </td>
+                <th>Tipo de Contrato</th>
+                <th>Plazo</th>
+                <th>Tasa</th>
+                <th>Rango de Precios</th>
+                <th>Taza Póliza</th>
+                <th>Opcion de Compra</th>
+                <th></th>
             </tr>
-        <% } %>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <%= for (rate) in interestRates { %>
+                <tr>
+                    <td><%= rate.ContractType %></td>
+                    <td><%= rate.Term %> Meses</td>
+                    <td><%= rate.Rate.Float64 %>%</td>
+                    <td><%= toCurrency(rate.MinValue.Float64) %> - <%= toCurrency(rate.MaxValue.Float64) %></td>
+                    <td>
+                        <%= if(rate.PolicyRatePresent) { %>
+                            <%= rate.PolicyRate.Float64 %>%
+                        <% } else { %>
+                            -
+                        <% } %>
+                    </td>
+                    <td>
+                        <%= if(rate.ContractType == "Leasing") { %>
+                            <%= rate.PurchaseOptionPercentage.Float64 %>%
+                        <% } else { %>
+                            -
+                        <% } %>
+                    </td>
+                    <td>
+                        <a href="<%= editInterestRatePath({interest_rate_id: rate.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
+                        <a href="<%= interestRateDeletePath({interest_rate_id: rate.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta tasa de interés?" class="btn btn-danger btn-sm">Borrar</a>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>
                                                 
+<%= if (len(interestRates) == 0) { %>
+    <div class="bg-white p-5 d-flex flex-column justify-content-center align-items-center">
+        <img src="/assets/images/no_rates.svg" alt="" width="200px">
+        <h4>No hay Tasas</h4>
+        <p class="text-center">Hey! Aún no tienes tasas de interes registradas. <br> Presiona en <b>Nueva tasa de interés</b> para agregar una tasa al sistema.</p>
+        <a href="<%= newInterestRatesPath() %>" class="btn btn-primary ms-1">Nueva tasa de interés</a>
+    </div>
+<% } %>

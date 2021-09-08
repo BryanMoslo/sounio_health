@@ -13,6 +13,7 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.Transaction)
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
+	root.GET("/", actions.Home)
 
 	root.GET("/interest_rates", actions.RateList)
 	root.GET("/interest_rates/new", actions.NewInterestRate)

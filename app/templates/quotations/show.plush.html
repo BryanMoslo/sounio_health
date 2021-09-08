@@ -1,38 +1,89 @@
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <div class="page-title-right">
-            <a href="<%= newQuotationsPath() %>" class="btn btn-primary ms-1">Exportar PDF</a>
+<div class="bg-white px-3 py-2">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="page-title font-22 fw-normal">Información de Cotización</h4>
+                <span class="btn btn-primary ms-1 export-pdf">Exportar Cotización</span>
             </div>
-            <h4 class="page-title font-22 fw-normal">Información de Cotización</h4>
         </div>
     </div>
-</div>
 
-<div class="mb-3">
-    <h4 class="mb-2">Cliente</h4>
-    <p class="mb-1"><b>Nombre: </b><%= quotation.Client.FirstName %> <%= quotation.Client.LastName %></p>
-    <p class="mb-1"><b>Email: </b><%= quotation.Client.Email %></p>
-    <p class="mb-1"><b>Teléfono: </b><%= quotation.Client.PhoneNumber %></p>
-    <p class="mb-1"><b>Direccion: </b><%= quotation.Client.Address %></p>
-</div>
+    <%= if(quotation.ClientID.Valid) { %>
+        <div class="mb-3">
+            <h4 class="mb-2">Cliente</h4>
+            <p class="mb-1">
+                <b>Identificación: </b>
+                <span class="client-name"><%= quotation.Client.Identification %></span>
+            </p>
+            <p class="mb-1">
+                <b>Nombre: </b>
+                <span class="client-name"><%= quotation.Client.FirstName %> <%= quotation.Client.LastName %></span>
+            </p>
+            <p class="mb-1">
+                <b>Email: </b>
+                <span class="client-email"><%= quotation.Client.Email %></span>
+            </p>
+            <p class="mb-1">
+                <b>Teléfono: </b>
+                <span class="client-phone-number"><%= quotation.Client.PhoneNumber %></span>
+            </p>
+            <p class="mb-1">
+                <b>Direccion: </b>
+                <span class="client-address"><%= quotation.Client.Address %></span>
+            </p>
+        </div>
+    <% } %>
 
-<div class="mb-3">
-    <h4 class="mb-2">Equipo</h4>
-    <p class="mb-1"><b>Equipo: </b><%= quotation.EquipmentName %></p>
-    <p class="mb-1"><b>Especificaciones: </b><%= quotation.EquipmentDescription %></p>
-</div>
+    <div class="mb-3">
+        <h4 class="mb-2">Equipo</h4>
 
-<div>
-    <h4 class="mb-2">Cotización de <%= quotation.ContractType %></h4>
-    <p class="mb-1"><b>Valor del Equipo: </b><%= toCurrency(quotation.EquipmentValue.Float64) %></p>
-    <p class="mb-1"><b>Plazo: </b><%= quotation.Term %> Meses</p>
-    <p class="mb-1"><b>Valor a pagar Mensual: </b><%= toCurrency(quotation.Fee) %>
-        <%= if(quotation.Rate.PolicyRatePresent) { %>
-            <b>(póliza de seguro incluída)</b>
-        <% } else { %>
-            <b>+ valor de póliza</b>
+        <p class="mb-1">
+            <b>Equipo: </b>
+            <span class="equipmen-name"><%= quotation.EquipmentName %></span>
+        </p>
+        
+        <p class="mb-1 col-8 p-0">
+            <b>Especificaciones: </b>
+            <span class="equipmen-description"><%= quotation.EquipmentDescription %></span>
+        </p>
+    </div>
+
+    <div>
+        <h4 class="mb-2">Cotización de <span class="contract-type"><%= quotation.ContractType %></span></h4>
+
+        <p class="mb-1">
+            <b>Valor del Equipo: </b>
+            <span class="equipment-price"><%= toCurrency(quotation.EquipmentValue.Float64) %></span>
+        </p>
+
+        <p class="mb-1">
+            <b>Plazo: </b>
+            <span class="term"><%= quotation.Term %> Meses</span>
+        </p>
+
+        <p class="mb-1"><b>Valor a pagar Mensual: </b>
+            <span class="fee"><%= toCurrency(quotation.Fee) %></span>
+
+            <%= if(quotation.Rate.PolicyRatePresent) { %>
+                <b>(póliza de seguro incluída)</b>
+            <% } else { %>
+                <b>+ valor de póliza</b>
+            <% } %>
+        </p>
+
+        <%= if(quotation.ContractType == "Leasing") { %>
+            <p class="mb-1"><b>Opción de Compra: </b>
+                <%= toCurrency(quotation.PurchaseOptionValue.Float64) %>
+                (<%= quotation.Rate.PurchaseOptionPercentage.Float64 %>%)
+            </p>
         <% } %>
+    </div>
 
-    </p>
+    <div class="data d-none"
+        data-date='<%= quotation.CreatedAt.Format("02/01/2006") %>'
+        data-today='<%= today() %>'
+        data-policy-included='<%= quotation.Rate.PolicyRatePresent %>'
+        data-purchase-option-value='<%= toCurrency(quotation.PurchaseOptionValue.Float64) %>'
+        data-purchase-option-percentage='<%= quotation.Rate.PurchaseOptionPercentage.Float64 %>'
+    ></div>
 </div>

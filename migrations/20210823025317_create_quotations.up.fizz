@@ -7,4 +7,5 @@ create_table("quotations") {
 	t.Column("term", "int", {})
 	t.Column("rate_id", "uuid", {})
 	t.Column("fee", "decimal", {})
+	t.Column("purchase_option_value", "decimal", {null: true})
 }

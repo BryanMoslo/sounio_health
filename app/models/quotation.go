@@ -23,6 +23,7 @@ type Quotation struct {
 	ClientID             nulls.UUID    `json:"client_id" db:"client_id"`
 	Client               Client        `belongs_to:"clients" fk_id:"ClientID" db:"-"`
 	Fee                  float64       `json:"fee" db:"fee"`
+	PurchaseOptionValue  nulls.Float64 `json:"purchase_option_value" db:"purchase_option_value"`
 	CreatedAt            time.Time     `json:"created_at" db:"created_at"`
 	UpdatedAt            time.Time     `json:"updated_at" db:"updated_at"`
 }
@@ -74,4 +75,11 @@ func (q *Quotation) CalculateFee(rate InterestRate) {
 
 	fee := q.EquipmentValue.Float64 * totalRate / 100
 	q.Fee = fee
+}
+
+func (q *Quotation) CalculatePurchaseOptionValue(rate InterestRate) {
+	percentage := rate.PurchaseOptionPercentage.Float64
+
+	purchaseOptionValue := q.EquipmentValue.Float64 * percentage / 100
+	q.PurchaseOptionValue = nulls.NewFloat64(purchaseOptionValue)
 }

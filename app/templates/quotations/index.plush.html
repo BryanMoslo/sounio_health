@@ -9,30 +9,46 @@
     </div>
 </div>
 
-<table class="table table-hover table-centered mb-0">
-    <thead>
-        <tr>
-            <th>Tipo de Contrato</th>
-            <th>Plazo</th>
-            <th>Valor del Equipo</th>
-            <th>Valor de Cuota</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <%= for (quotation) in quotations { %>
+<%= if (len(quotations) > 0) { %>
+    <table class="table table-hover table-centered mb-0">
+        <thead>
             <tr>
-                <td><%= quotation.ContractType %></td>
-                <td><%= quotation.Term %> Meses</td>
-                <td><%= toCurrency(quotation.EquipmentValue.Float64) %></td>
-                <td><%= toCurrency(quotation.Fee) %></td>
-                <td>
-                    <a href="<%= quotationShowPath({quotation_id: quotation.ID}) %>" class="btn btn-success btn-sm">Ver</a>
-                    <a href="<%= editQuotationPath({quotation_id: quotation.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
-                    <a href="<%= quotationDeletePath({quotation_id: quotation.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta cotización?" class="btn btn-danger btn-sm">Borrar</a>
-                </td>
+                <th>Tipo de Contrato</th>
+                <th>Plazo</th>
+                <th>Valor del Equipo</th>
+                <th>Valor de Cuota</th>
+                <th>Opcion de Compra</th>
+                <th></th>
             </tr>
-        <% } %>
-    </tbody>
-</table>
-                                                
+        </thead>
+        <tbody>
+            <%= for (quotation) in quotations { %>
+                <tr>
+                    <td><%= quotation.ContractType %></td>
+                    <td><%= quotation.Term %> Meses</td>
+                    <td><%= toCurrency(quotation.EquipmentValue.Float64) %></td>
+                    <td><%= toCurrency(quotation.Fee) %></td>
+                    <%= if(quotation.ContractType == "Leasing") { %>
+                        <td><%= toCurrency(quotation.PurchaseOptionValue.Float64) %></td>
+                    <% } else { %>
+                        <td>-</td>
+                    <% } %>
+                    <td>
+                        <a href="<%= quotationShowPath({quotation_id: quotation.ID}) %>" class="btn btn-success btn-sm">Ver</a>
+                        <a href="<%= editQuotationPath({quotation_id: quotation.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
+                        <a href="<%= quotationDeletePath({quotation_id: quotation.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta cotización?" class="btn btn-danger btn-sm">Borrar</a>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>
+           
+<%= if (len(quotations) == 0) { %>
+    <div class="bg-white p-5 d-flex flex-column justify-content-center align-items-center">
+        <img src="/assets/images/no_quotations.svg" alt="" width="200px">
+        <h4>No hay Cotizaciones</h4>
+        <p class="text-center">Hey! Aún no tienes cotizaciones registradas. <br> Presiona en <b>Nueva Cotización</b> para agregar una cotización al sistema.</p>
+        <a href="<%= newQuotationsPath() %>" class="btn btn-primary ms-1">Nueva Cotización</a>
+    </div>
+<% } %>

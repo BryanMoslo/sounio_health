@@ -105,7 +105,7 @@ func (ir *InterestRate) Validate() *validate.Errors {
 			Name:    "MaxValue",
 			Message: "%v El valor máximo debe ser mayor al mínimo.",
 			Fn: func() bool {
-				if ir.MinValue.Valid && ir.MaxValue.Valid {
+				if ir.MinValue.Valid && ir.MaxValue.Valid && ir.MaxValue.Float64 > 0 {
 					return ir.MaxValue.Float64 > ir.MinValue.Float64
 				}
 

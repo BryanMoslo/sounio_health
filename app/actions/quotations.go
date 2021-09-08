@@ -3,6 +3,7 @@ package actions
 import (
 	"cotizador_sounio_health/app/models"
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/gofrs/uuid"
@@ -16,7 +17,7 @@ func QuotationsList(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	quotations := models.Quotations{}
-	if err := tx.Order("updated_at").All(&quotations); err != nil {
+	if err := tx.Eager().Order("updated_at").All(&quotations); err != nil {
 		return err
 	}
 
@@ -40,7 +41,7 @@ func NewQuotation(c buffalo.Context) error {
 
 	clientsList := make(map[string]uuid.UUID)
 	for _, client := range clients {
-		clientsList[client.FirstName] = client.ID
+		clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
 	}
 
 	c.Set("clients", clientsList)
@@ -64,7 +65,7 @@ func CreateQuotation(c buffalo.Context) error {
 
 		clientsList := make(map[string]uuid.UUID)
 		for _, client := range clients {
-			clientsList[client.FirstName] = client.ID
+			clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
 		}
 
 		c.Set("clients", clients)
@@ -92,6 +93,11 @@ func CreateQuotation(c buffalo.Context) error {
 
 	quotation.RateID = rate.ID
 	quotation.CalculateFee(rate)
+
+	if quotation.ContractType == models.ContractTypeLeasing {
+		quotation.CalculatePurchaseOptionValue(rate)
+	}
+
 	if err := tx.Create(&quotation); err != nil {
 		return err
 	}
@@ -129,10 +135,10 @@ func EditQuotation(c buffalo.Context) error {
 
 	clientsList := make(map[string]uuid.UUID)
 	for _, client := range clients {
-		clientsList[client.FirstName] = client.ID
+		clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
 	}
 
-	c.Set("clients", clients)
+	c.Set("clients", clientsList)
 	c.Set("quotation", quotation)
 	return c.Render(http.StatusOK, r.HTML("quotations/edit.plush.html"))
 }
@@ -158,7 +164,7 @@ func UpdateQuotation(c buffalo.Context) error {
 
 		clientsList := make(map[string]uuid.UUID)
 		for _, client := range clients {
-			clientsList[client.FirstName] = client.ID
+			clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
 		}
 
 		c.Set("clients", clients)
@@ -186,6 +192,11 @@ func UpdateQuotation(c buffalo.Context) error {
 
 	quotation.RateID = rate.ID
 	quotation.CalculateFee(rate)
+
+	if quotation.ContractType == models.ContractTypeLeasing {
+		quotation.CalculatePurchaseOptionValue(rate)
+	}
+
 	if err := tx.Update(&quotation); err != nil {
 		return err
 	}

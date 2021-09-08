@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"time"
 
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/plush/v4"
@@ -31,6 +32,7 @@ var Helpers = map[string]interface{}{
 	"toCurrency":      toCurrency,
 	"floatToString":   floatToString,
 	"activePathClass": activePathClass,
+	"today":           today,
 }
 
 func toCurrency(value float64) string {
@@ -56,4 +58,8 @@ func activePathClass(class, basePath string, help plush.HelperContext) string {
 	}
 
 	return ""
+}
+
+func today() string {
+	return time.Now().Format("02/01/2006")
 }

@@ -9,29 +9,42 @@
     </div>
 </div>
 
-<table class="table table-hover table-centered mb-0">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Dirección</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <%= for (client) in clients { %>
+<%= if (len(clients) > 0) { %>
+    <table class="table table-hover table-centered mb-0">
+        <thead>
             <tr>
-                <td><%= client.FirstName %><%= client.LastName %></td>
-                <td><%= client.Email %></td>
-                <td><%= client.PhoneNumber %></td>
-                <td><%= client.Address %></td>
-                <td>
-                    <a href="<%= editClientPath({client_id: client.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
-                    <a href="<%= clientDeletePath({client_id: client.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar este cliente?" class="btn btn-danger btn-sm">Borrar</a>
-                </td>
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th></th>
             </tr>
-        <% } %>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <%= for (client) in clients { %>
+                <tr>
+                    <td><%= client.Identification %></td>
+                    <td><%= client.FirstName %><%= client.LastName %></td>
+                    <td><%= client.Email %></td>
+                    <td><%= client.PhoneNumber %></td>
+                    <td><%= client.Address %></td>
+                    <td>
+                        <a href="<%= editClientPath({client_id: client.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
+                        <a href="<%= clientDeletePath({client_id: client.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar este cliente?" class="btn btn-danger btn-sm">Borrar</a>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>
+
+<%= if (len(clients) == 0) { %>
+    <div class="bg-white p-5 d-flex flex-column justify-content-center align-items-center">
+        <img src="/assets/images/no_clients.svg" alt="" width="200px">
+        <h4>No hay Clientes</h4>
+        <p class="text-center">Hey! Aún no tienes clientes registrados. <br> Presiona en <b>Nuevo Cliente</b> para agregar un cliente al sistema.</p>
+        <a href="<%= newClientsPath() %>" class="btn btn-primary ms-1">Nuevo Cliente</a>
+    </div>
+<% } %>
                                                 

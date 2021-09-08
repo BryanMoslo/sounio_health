@@ -1,5 +1,6 @@
 create_table("clients") {
     t.Column("id", "uuid", {primary: true})
+	t.Column("identification", "string", {})
 	t.Column("first_name", "string", {})
 	t.Column("last_name", "string", {})
 	t.Column("email", "string", {})
