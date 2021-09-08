@@ -1,29 +1,36 @@
-FROM golang:1.16 as builder
+FROM golang:1.16-rc-alpine as builder
 
-# Installing nodejs
-RUN apk add --update nodejs-current curl bash build-base
+ENV GO111MODULE on
+ENV GOPROXY https://proxy.golang.org/
+
+# Installing nodejs and other dependecies
+RUN apk add --update nodejs-current python2 curl bash build-base
 
 # Installing Yarn
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.10
 ENV PATH="$PATH:/root/.yarn/bin:/root/.config/yarn/global/node_modules"
 
+WORKDIR /sounio_health
+ADD go.mod .
+ADD go.sum .
+RUN go mod download -x
+
 # Installing ox
-RUN go install github.com/wawandco/oxpecker/cmd/ox@latest
-WORKDIR /app
+RUN go install github.com/wawandco/oxpecker/cmd/ox@master
 ADD . .
 
-# Building the application binary in bin/app 
+# Building the application binary in bin/app
 RUN ox build --static -o bin/app
 
 FROM alpine
-RUN apk add --no-cache curl
-RUN apk add --no-cache curl
-RUN apk add --no-cache curl
+
 # Binaries
-COPY --from=builder /app/bin/* /bin/
+COPY --from=builder /sounio_health/bin/app/* /bin/app
+# COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /zoneinfo.zip
+# ENV ZONEINFO=/zoneinfo.zip
 
-# For migrations use 
-# CMD ox db migrate; app 
+EXPOSE 3000
+
+# For migrations use
+# CMD ox db migrate up; app
 CMD app
-
-

@@ -2,9 +2,9 @@ package models
 
 import (
 	"bytes"
-	"log"
 	base "cotizador_sounio_health"
-	
+	"log"
+
 	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop/v5"
 )

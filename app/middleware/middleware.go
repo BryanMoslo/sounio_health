@@ -12,7 +12,7 @@ import (
 
 var (
 	// Transaction middleware wraps the request with a pop
-	// transaction that is committed on success and rolled 
+	// transaction that is committed on success and rolled
 	// back when errors happen.
 	Transaction = tx.Transaction(models.DB())
 
