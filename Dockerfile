@@ -16,9 +16,14 @@ ADD . .
 RUN ox build --static -o bin/app
 
 FROM alpine
+RUN apk add --no-cache curl
+RUN apk add --no-cache curl
+RUN apk add --no-cache curl
 # Binaries
 COPY --from=builder /app/bin/* /bin/
 
 # For migrations use 
 # CMD ox db migrate; app 
 CMD app
+
+
