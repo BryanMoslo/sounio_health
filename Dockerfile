@@ -25,7 +25,7 @@ RUN ox build --static -o bin/app
 FROM alpine
 
 # Binaries
-COPY --from=builder /sounio_health/bin/app/* /bin/app
+COPY --from=builder /sounio_health/bin/app /bin/app
 # COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /zoneinfo.zip
 # ENV ZONEINFO=/zoneinfo.zip
 
