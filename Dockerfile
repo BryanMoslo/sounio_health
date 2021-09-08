@@ -22,14 +22,18 @@ ADD . .
 # Building the application binary in bin/app
 RUN ox build --static -o bin/app
 
+RUN go build -o ./bin/cli -ldflags '-linkmode external -extldflags "-static"' ./cmd/ox 
+
 FROM alpine
 
 # Binaries
 COPY --from=builder /sounio_health/bin/app /bin/app
+COPY --from=builder /sounio_health/bin/cli /bin/cli
 # COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /zoneinfo.zip
 # ENV ZONEINFO=/zoneinfo.zip
 
+ENV ADDR=0.0.0.0
 EXPOSE 3000
 
 # For migrations use
-CMD ox db create; ox db migrate up; app
+CMD /bin/app migrate; /bin/app
