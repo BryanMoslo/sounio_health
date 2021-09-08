@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/gobuffalo/validate/v3"
@@ -46,4 +47,8 @@ func (c *Client) Validate() *validate.Errors {
 		&validators.StringIsPresent{Field: c.LastName, Name: "LastName", Message: "Por favor, escriba el apellido del usuario."},
 		&validators.StringIsPresent{Field: c.Email, Name: "Email", Message: "Por favor, escriba el email del usuario."},
 	)
+}
+
+func (c *Client) FullName() string {
+	return fmt.Sprintf("%v %v", c.FirstName, c.LastName)
 }

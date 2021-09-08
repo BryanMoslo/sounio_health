@@ -25,7 +25,7 @@
             <%= for (client) in clients { %>
                 <tr>
                     <td><%= client.Identification %></td>
-                    <td><%= client.FirstName %><%= client.LastName %></td>
+                    <td><%= client.FullName() %></td>
                     <td><%= client.Email %></td>
                     <td><%= client.PhoneNumber %></td>
                     <td><%= client.Address %></td>

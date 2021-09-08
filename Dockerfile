@@ -36,4 +36,4 @@ ENV ADDR=0.0.0.0
 EXPOSE 3000
 
 # For migrations use
-CMD /bin/app migrate; /bin/app
+CMD /bin/cli db migrate; /bin/app
