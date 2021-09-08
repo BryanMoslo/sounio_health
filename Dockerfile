@@ -32,5 +32,4 @@ COPY --from=builder /sounio_health/bin/app /bin/app
 EXPOSE 3000
 
 # For migrations use
-# CMD ox db migrate up; app
-CMD app
+CMD ox db migrate up; app
