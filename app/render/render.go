@@ -33,6 +33,7 @@ var Helpers = map[string]interface{}{
 	"floatToString":   floatToString,
 	"activePathClass": activePathClass,
 	"today":           today,
+	"terms":           terms,
 }
 
 func toCurrency(value float64) string {
@@ -62,4 +63,13 @@ func activePathClass(class, basePath string, help plush.HelperContext) string {
 
 func today() string {
 	return time.Now().Format("02/01/2006")
+}
+
+func terms() []string {
+	terms := []string{}
+	for i := 36; i <= 72; i++ {
+		terms = append(terms, fmt.Sprintf("%v", i))
+	}
+
+	return terms
 }

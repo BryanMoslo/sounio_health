@@ -3,7 +3,7 @@
         <%= f.SelectTag("ContractType", {class: "form-select contract-type-select", label: "Tipo de contrato", options: ["Arriendo", "Leasing"]}) %>
     </div>
     <div class="col-lg-4">
-        <%= f.SelectTag("Term", {class: "form-select", label: "Plazo (Meses)", options: ["36", "48", "60"]}) %>
+        <%= f.SelectTag("Term", {class: "form-select", label: "Plazo (Meses)", options: terms()}) %>
     </div>
     <div class="col-lg-4">
         <%= f.InputTag("Rate", {label: "Tasa de interés (%)", class: "percentage-input", placeholder: "Ej: 4.15"}) %>

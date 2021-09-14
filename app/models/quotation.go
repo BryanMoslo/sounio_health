@@ -8,6 +8,7 @@ import (
 	"github.com/gobuffalo/validate/v3"
 	"github.com/gobuffalo/validate/v3/validators"
 	"github.com/gofrs/uuid"
+	"github.com/leekchan/accounting"
 )
 
 // Quotation model struct.
@@ -82,4 +83,10 @@ func (q *Quotation) CalculatePurchaseOptionValue(rate InterestRate) {
 
 	purchaseOptionValue := q.EquipmentValue.Float64 * percentage / 100
 	q.PurchaseOptionValue = nulls.NewFloat64(purchaseOptionValue)
+}
+
+// FormatEquipmentValue returns the equipment value as currency
+func (q Quotation) FormatEquipmentValue() string {
+	ac := accounting.Accounting{Symbol: "$", Precision: 0}
+	return ac.FormatMoney(q.EquipmentValue.Float64)
 }

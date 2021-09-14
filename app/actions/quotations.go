@@ -87,8 +87,21 @@ func CreateQuotation(c buffalo.Context) error {
 	}
 
 	if err != nil && errors.Cause(err) == sql.ErrNoRows {
-		return err
-		// something happening here
+		clients := models.Clients{}
+		if err := tx.Order("first_name").All(&clients); err != nil {
+			return err
+		}
+
+		clientsList := make(map[string]uuid.UUID)
+		for _, client := range clients {
+			clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
+		}
+
+		c.Set("clients", clients)
+		c.Set("quotation", quotation)
+
+		c.Flash().Add("danger", fmt.Sprintf("No existe una tasa de interés en el sistema para un %v a %v meses por un equipo de %v.", quotation.ContractType, quotation.Term, quotation.FormatEquipmentValue()))
+		return c.Render(http.StatusOK, r.HTML("quotations/new.plush.html"))
 	}
 
 	quotation.RateID = rate.ID
@@ -103,7 +116,7 @@ func CreateQuotation(c buffalo.Context) error {
 	}
 
 	c.Flash().Add("success", "Cotización creada correctamente.")
-	return c.Redirect(http.StatusSeeOther, "/quotations")
+	return c.Redirect(http.StatusSeeOther, "/quotations/%v/show", quotation.ID)
 }
 
 func ShowQuotation(c buffalo.Context) error {

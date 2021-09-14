@@ -90,9 +90,8 @@ $(() => {
 
         if(contractType == "Leasing"){
             let purchaseOptionValue = $(".data").data('purchase-option-value')
-            let purchaseOptionPercentage = $(".data").data('purchase-option-percentage')
             headers.push("Opción de Compra")
-            values.push(`${purchaseOptionValue}\n(${purchaseOptionPercentage}%)`)
+            values.push(`${purchaseOptionValue}`)
         }
 
         let quotationForMessage = ""
@@ -100,10 +99,12 @@ $(() => {
             quotationForMessage = "Cotización para:"
         }
 
+        let quotationId = Math.floor(Math.random() * (99999 - 999)) + 999
+
         var props = {
             outputType: "",
             returnJsPDFDocObject: true,
-            fileName: "Invoice 2021",
+            fileName: `cotizacion_${quotationId}_${currentDate}`,
             orientationLandscape: false,
             logo: {
                 src: "/assets/images/logo.jpg",
@@ -116,10 +117,10 @@ $(() => {
             },
             business: {
                 name: "Sounio Health",
-                address: "contacto@souniohealth.com",
-                phone: "(+57) 321 827 12 27",
-                email: "(+57) 301 796 45 85",
-                email_1: "Cra 55 # 187 - 821",
+                address: "mirandajahir22@gmail.com",
+                phone: "prascasaskia@gmail.com",
+                email: "(311) 898 56 27",
+                email_1: "(322) 768 78 46",
                 website: "Cali, Colombia",
             },
             contact: {
@@ -131,7 +132,7 @@ $(() => {
             },
             invoice: {
                 label: "Cotización #: ",
-                num: Math.floor(Math.random() * (99999 - 999)) + 999,
+                num: quotationId,
                 invDate: `Fecha de hoy: ${quotationDate}`,
                 invGenDate: `Fecha de Cotización: ${currentDate}`,
                 headerBorder: false,
