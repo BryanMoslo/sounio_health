@@ -18,7 +18,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Teléfono</th>
                 <th scope="col">Dirección</th>
-                <th scope="col"></th>
+                <th scope="col" class="w-20"></th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +31,7 @@
                     <td data-label="Dirección"><%= client.Address %></td>
                     <td data-label="">
                         <a href="<%= editClientPath({client_id: client.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
-                        <a href="<%= clientDeletePath({client_id: client.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar este cliente?" class="btn btn-danger btn-sm">Borrar</a>
+                        <a href="<%= clientDeletePath({client_id: client.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar este cliente?" class="btn btn-danger btn-sm ml-1">Borrar</a>
                     </td>
                 </tr>
             <% } %>

@@ -68,7 +68,7 @@ func CreateQuotation(c buffalo.Context) error {
 			clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
 		}
 
-		c.Set("clients", clients)
+		c.Set("clients", clientsList)
 		c.Set("errors", verrs)
 		c.Set("quotation", quotation)
 
@@ -97,7 +97,7 @@ func CreateQuotation(c buffalo.Context) error {
 			clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
 		}
 
-		c.Set("clients", clients)
+		c.Set("clients", clientsList)
 		c.Set("quotation", quotation)
 
 		c.Flash().Add("danger", fmt.Sprintf("No existe una tasa de interés en el sistema para un %v a %v meses por un equipo de %v.", quotation.ContractType, quotation.Term, quotation.FormatEquipmentValue()))
@@ -180,7 +180,7 @@ func UpdateQuotation(c buffalo.Context) error {
 			clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
 		}
 
-		c.Set("clients", clients)
+		c.Set("clients", clientsList)
 		c.Set("errors", verrs)
 		c.Set("quotation", quotation)
 
@@ -199,8 +199,21 @@ func UpdateQuotation(c buffalo.Context) error {
 	}
 
 	if err != nil && errors.Cause(err) == sql.ErrNoRows {
-		return err
-		// something happening here
+		clients := models.Clients{}
+		if err := tx.Order("first_name").All(&clients); err != nil {
+			return err
+		}
+
+		clientsList := make(map[string]uuid.UUID)
+		for _, client := range clients {
+			clientsList[fmt.Sprintf("%v %v", client.FirstName, client.LastName)] = client.ID
+		}
+
+		c.Set("clients", clientsList)
+		c.Set("quotation", quotation)
+
+		c.Flash().Add("danger", fmt.Sprintf("No existe una tasa de interés en el sistema para un %v a %v meses por un equipo de %v.", quotation.ContractType, quotation.Term, quotation.FormatEquipmentValue()))
+		return c.Render(http.StatusOK, r.HTML("quotations/new.plush.html"))
 	}
 
 	quotation.RateID = rate.ID

@@ -18,7 +18,7 @@
                 <th scope="col">Valor del Equipo</th>
                 <th scope="col">Valor de Cuota</th>
                 <th scope="col">Opción de Compra</th>
-                <th scope="col"></th>
+                <th scope="col" class="w-20"></th>
             </tr>
         </thead>
         <tbody>
@@ -35,8 +35,8 @@
                     <% } %>
                     <td data-label="">
                         <a href="<%= quotationShowPath({quotation_id: quotation.ID}) %>" class="btn btn-success btn-sm">Ver</a>
-                        <a href="<%= editQuotationPath({quotation_id: quotation.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
-                        <a href="<%= quotationDeletePath({quotation_id: quotation.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta cotización?" class="btn btn-danger btn-sm">Borrar</a>
+                        <a href="<%= editQuotationPath({quotation_id: quotation.ID}) %>" class="btn btn-info btn-sm ml-1">Modificar</a>
+                        <a href="<%= quotationDeletePath({quotation_id: quotation.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta cotización?" class="btn btn-danger btn-sm ml-1">Borrar</a>
                     </td>
                 </tr>
             <% } %>
