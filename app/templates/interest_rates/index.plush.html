@@ -13,37 +13,37 @@
     <table class="table table-hover table-centered mb-0">
         <thead>
             <tr>
-                <th>Tipo de Contrato</th>
-                <th>Plazo</th>
-                <th>Tasa</th>
-                <th>Rango de Precios</th>
-                <th>Taza Póliza</th>
-                <th>Opcion de Compra</th>
-                <th></th>
+                <th scope="col">Tipo de Contrato</th>
+                <th scope="col">Plazo</th>
+                <th scope="col">Tasa</th>
+                <th scope="col">Rango de Precios</th>
+                <th scope="col">Taza Póliza</th>
+                <th scope="col">Opción de Compra</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             <%= for (rate) in interestRates { %>
                 <tr>
-                    <td><%= rate.ContractType %></td>
-                    <td><%= rate.Term %> Meses</td>
-                    <td><%= rate.Rate.Float64 %>%</td>
-                    <td><%= toCurrency(rate.MinValue.Float64) %> - <%= toCurrency(rate.MaxValue.Float64) %></td>
-                    <td>
+                    <td data-label="Tipo de Contrato"><%= rate.ContractType %></td>
+                    <td data-label="Plazo"><%= rate.Term %> Meses</td>
+                    <td data-label="Tasa"><%= rate.Rate.Float64 %>%</td>
+                    <td data-label="Rango de Precios"><%= toCurrency(rate.MinValue.Float64) %> - <%= toCurrency(rate.MaxValue.Float64) %></td>
+                    <td data-label="Taza Póliza">
                         <%= if(rate.PolicyRatePresent) { %>
                             <%= rate.PolicyRate.Float64 %>%
                         <% } else { %>
                             -
                         <% } %>
                     </td>
-                    <td>
+                    <td data-label="Opción de Compra">
                         <%= if(rate.ContractType == "Leasing") { %>
                             <%= rate.PurchaseOptionPercentage.Float64 %>%
                         <% } else { %>
                             -
                         <% } %>
                     </td>
-                    <td>
+                    <td data-label="">
                         <a href="<%= editInterestRatePath({interest_rate_id: rate.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
                         <a href="<%= interestRateDeletePath({interest_rate_id: rate.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta tasa de interés?" class="btn btn-danger btn-sm">Borrar</a>
                     </td>

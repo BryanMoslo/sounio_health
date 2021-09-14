@@ -155,4 +155,8 @@ $(() => {
 
         pdfCreated.jsPDFDocObject.save();
     })
+
+    $(document).on('click', '.mobile-menu', function() {
+        $(".leftside-menu").toggleClass("d-flex");
+    })
 });

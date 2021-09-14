@@ -13,13 +13,17 @@
 </head>
 <body class="h-full" class="show" data-leftbar-theme="dark">
 	<main class="wrapper">
+		<div class="mobile-menu pt-2 pb-1 px-3 justify-content-between">
+			<h4 class="">SOUNIO HEALTH</h4>
+			<i class="bi bi-list"></i>
+		</div>
 		<div class="leftside-menu menuitem-active">
 			<!-- LOGO -->
 			<a href="/" class="logo py-3 pl-4 mb-2 d-block">
 				<h4 class="text-white">SOUNIO HEALTH</h4>
 			</a>
 
-			<div class="h-100 show px-2" id="leftside-menu-container" data-simplebar="init">
+			<div class="h-100 w-100 show px-2" id="leftside-menu-container" data-simplebar="init">
 				<a href="<%= quotationsPath() %>" class="cursor-pointer w-100 d-flex align-items-center side-nav-title <%= activePathClass("active", "/quotations/.*") %>">
 					<i class="bi bi-file-earmark-spreadsheet font-20 mr-2"></i> 
 					Cotizaciones

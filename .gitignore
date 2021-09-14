@@ -30,3 +30,4 @@ generated/
 package-lock.json
 coverage.out
 migrations/schema.sql
+.env
