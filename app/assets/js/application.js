@@ -127,8 +127,8 @@ $(() => {
                 label: quotationForMessage,
                 name: clientName,
                 address: clientAddress,
-                phone: clientPhoneNumber,
-                email: clientEmail,
+                email: clientPhoneNumber,
+                otherInfo: clientEmail,
             },
             invoice: {
                 label: "Cotización #: ",
