@@ -116,7 +116,7 @@ $(() => {
                 }
             },
             business: {
-                name: "Sounio Health",
+                name: "Sounio Health SAS",
                 address: "mirandajahir22@gmail.com",
                 phone: "prascasaskia@gmail.com",
                 email: "(311) 898 56 27",
