@@ -35,9 +35,9 @@
                     <% } %>
                     <td data-label="">
                         <div class="d-flex flex-row">
-                            <a href="<%= quotationShowPath({quotation_id: quotation.ID}) %>" class="btn btn-success btn-sm">Ver</a>
-                            <a href="<%= editQuotationPath({quotation_id: quotation.ID}) %>" class="btn btn-info btn-sm ml-1">Modificar</a>
-                            <a href="<%= quotationDeletePath({quotation_id: quotation.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta cotización?" class="btn btn-danger btn-sm ml-1">Borrar</a>
+                            <a title="Ver" href="<%= quotationShowPath({quotation_id: quotation.ID}) %>" class="btn btn-success btn-sm"><i class="bi bi-eye font-16 d-flex text-white"></i></a>
+                            <a title="Modificar" href="<%= editQuotationPath({quotation_id: quotation.ID}) %>" class="btn btn-info btn-sm ml-1"><i class="bi bi-pencil-square font-16 d-flex text-white"></i></a>
+                            <a title="Eliminar" href="<%= quotationDeletePath({quotation_id: quotation.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta cotización?" class="btn btn-danger btn-sm ml-1"><i class="bi bi-trash font-16 d-flex text-white"></i></a>
                         </div>
                     </td>
                 </tr>

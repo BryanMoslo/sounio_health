@@ -30,8 +30,10 @@
                     <td data-label="Teléfono"><%= client.PhoneNumber %></td>
                     <td data-label="Dirección"><%= client.Address %></td>
                     <td data-label="">
-                        <a href="<%= editClientPath({client_id: client.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
-                        <a href="<%= clientDeletePath({client_id: client.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar este cliente?" class="btn btn-danger btn-sm ml-1">Borrar</a>
+                        <div class="d-flex align-items-center">
+                            <a title="Modificar" href="<%= editClientPath({client_id: client.ID}) %>" class="btn btn-info btn-sm"><i class="bi bi-pencil-square font-16 d-flex text-white"></i></a>
+                            <a title="Eliminar" href="<%= clientDeletePath({client_id: client.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar este cliente?" class="btn btn-danger btn-sm ml-1"><i class="bi bi-trash font-16 d-flex text-white"></i></a>
+                        </div>
                     </td>
                 </tr>
             <% } %>

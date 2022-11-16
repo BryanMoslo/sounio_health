@@ -44,8 +44,10 @@
                         <% } %>
                     </td>
                     <td data-label="">
-                        <a href="<%= editInterestRatePath({interest_rate_id: rate.ID}) %>" class="btn btn-info btn-sm">Modificar</a>
-                        <a href="<%= interestRateDeletePath({interest_rate_id: rate.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta tasa de interés?" class="btn btn-danger btn-sm ml-1">Borrar</a>
+                        <div class="d-flex align-items-center">
+                            <a title="Modificar" href="<%= editInterestRatePath({interest_rate_id: rate.ID}) %>" class="btn btn-info btn-sm"><i class="bi bi-pencil-square font-16 d-flex text-white"></i></a>
+                            <a title="Eliminar" href="<%= interestRateDeletePath({interest_rate_id: rate.ID}) %>" data-method="DELETE" data-confirm="Estás seguro que quieres elimiar esta tasa de interés?" class="btn btn-danger btn-sm ml-1"><i class="bi bi-trash font-16 d-flex text-white"></i></a>
+                        </div>
                     </td>
                 </tr>
             <% } %>
